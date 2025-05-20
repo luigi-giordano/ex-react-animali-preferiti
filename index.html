@@ -13,9 +13,22 @@
   <!-- Babel (per compilare JSX nel browser) -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
+
+    const { useState } = React;
+
     const ListaAnimali = () => {
-      const animali = ['Cane', 'Gatto', 'Topo', 'Elefante'];
-      return (
+
+      const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
+      const [animali, setAnimali] = useState([]);
+
+      const addAnimal = () => {
+        const indiceRandom = Math.floor(Math.random() * animalsChoices.length)
+        const animaleRandom = animalsChoices[indiceRandom];
+        setAnimali(curr => [...curr, animaleRandom])
+      }
+
+      return (<>
+        <button onClick={addAnimal}>Aggiungi un animale</button>
         <details>
           <summary>Animali</summary>
           <ul>
@@ -24,7 +37,7 @@
             ))}
           </ul>
         </details>
-      )
+      </>)
     }
   </script>
   <script type="text/babel">
