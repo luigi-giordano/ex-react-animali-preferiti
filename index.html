@@ -41,16 +41,22 @@
     const ListaAnimali = () => {
 
       const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
+
       const [animali, setAnimali] = useState([]);
 
+      const [show, setShow] = useState(false);
+
+      const [animalName, setAnimalName] = useState('');
+
       const addAnimal = () => {
-        const indiceRandom = Math.floor(Math.random() * animalsChoices.length)
-        const animaleRandom = animalsChoices[indiceRandom];
-        setAnimali(curr => [...curr, animaleRandom])
+        if (!animalName) return;
+        setAnimali(curr => [...curr, animalName]);
+        setAnimalName('');
+        setShow(false);
       }
 
       return (<>
-        <button onClick={addAnimal}>Aggiungi un animale</button>
+        <button onClick={() => setShow(true)}>Aggiungi un animale</button>
         <details>
           <summary>Animali</summary>
           <ul>
@@ -59,6 +65,19 @@
             ))}
           </ul>
         </details>
+        <Modal
+          show={show}
+          onClose={() => setShow(false)}
+          onConfirm={addAnimal}
+          title="Aggiungi Animale"
+          content={
+            <input
+              type="text"
+              value={animalName}
+              onChange={e => setAnimalName(e.target.value)}
+            />
+          }
+        />
       </>)
     }
   </script>
